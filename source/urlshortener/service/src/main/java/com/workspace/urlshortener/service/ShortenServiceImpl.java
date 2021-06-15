@@ -15,7 +15,7 @@ import com.google.common.hash.Hashing;
 import com.workspace.urlshortener.dto.ShortenRequest;
 import com.workspace.urlshortener.exception.ApplicationException;
 import com.workspace.urlshortener.model.Url;
-import com.workspace.urlshortener.respository.ShortenRepositoryDup;
+import com.workspace.urlshortener.respository.ShortenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 public class ShortenServiceImpl implements ShortenService {
 
   @Autowired
-  private ShortenRepositoryDup shortenRepository;
+  private ShortenRepository shortenRepository;
 
   @Override
   public Url generateAndPersistShortUrl(ShortenRequest request) {
@@ -48,7 +48,8 @@ public class ShortenServiceImpl implements ShortenService {
   }
 
   private String encodeUrl(String url) {
-    return Hashing.murmur3_32()
+    return Hashing
+        .murmur3_32()
         .hashString(url.concat(LocalDateTime.now().toString()), StandardCharsets.UTF_8)
         .toString();
   }

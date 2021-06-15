@@ -19,6 +19,5 @@ import lombok.NoArgsConstructor;
 public class ShortenRequest {
 
   private String url;
-  private String expirationDate;
 
 }

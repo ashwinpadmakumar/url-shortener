@@ -11,9 +11,9 @@ package com.workspace.urlshortener.respository;
 import com.workspace.urlshortener.model.Url;
 
 public interface ShortenRepository {
-  Url findUrl(String shortLink);
+  Url findByShortUrl(String shortLink);
 
-  Url saveUrl(Url url);
+  Url save(Url url);
 
-  void deleteUrl(Url url);
+  void delete(Url url);
 }

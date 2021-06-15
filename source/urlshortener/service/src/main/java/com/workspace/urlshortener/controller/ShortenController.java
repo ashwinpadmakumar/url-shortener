@@ -11,6 +11,7 @@ package com.workspace.urlshortener.controller;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import com.workspace.urlshortener.dto.ShortenRequest;
 import com.workspace.urlshortener.dto.ShortenResponse;
@@ -38,7 +39,7 @@ public class ShortenController {
 
 
   @PostMapping("/generate")
-  public ResponseEntity<ShortenResponse> generateShortUrl(@RequestBody ShortenRequest request) {
+  public ResponseEntity<ShortenResponse> generateShortUrl(@Valid @RequestBody ShortenRequest request) {
     Url url = shortenService.generateAndPersistShortUrl(request);
 
     ShortenResponse response = new ShortenResponse();
