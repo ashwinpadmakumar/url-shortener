@@ -9,6 +9,8 @@
 package com.workspace.urlshortener.model;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -30,5 +32,4 @@ public class Url {
   @Lob
   private String originalUrl;
   private LocalDateTime creationDate;
-  private LocalDateTime expirationDate;
 }

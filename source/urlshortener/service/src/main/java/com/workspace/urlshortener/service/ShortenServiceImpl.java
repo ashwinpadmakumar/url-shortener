@@ -15,36 +15,31 @@ import com.google.common.hash.Hashing;
 import com.workspace.urlshortener.dto.ShortenRequest;
 import com.workspace.urlshortener.exception.ApplicationException;
 import com.workspace.urlshortener.model.Url;
-import com.workspace.urlshortener.respository.ShortenRepository;
+import com.workspace.urlshortener.respository.JpaRepositoryImpl;
+import com.workspace.urlshortener.respository.RedisRepositoryImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@Slf4j
 public class ShortenServiceImpl implements ShortenService {
 
   @Autowired
-  private ShortenRepository shortenRepository;
+  private JpaRepositoryImpl jpaRepository;
+
+  @Autowired
+  private RedisRepositoryImpl redisRepository;
 
   @Override
   public Url generateAndPersistShortUrl(ShortenRequest request) {
-    Url persistUrl = new Url();
-    persistUrl.setShortUrl(encodeUrl(request.getUrl()));
-    persistUrl.setOriginalUrl(request.getUrl());
-    persistUrl.setCreationDate(LocalDateTime.now());
-    persistUrl.setExpirationDate(generateExpirationDate(persistUrl.getCreationDate()));
+    Url urlObject = new Url();
+    urlObject.setShortUrl(encodeUrl(request.getUrl()));
+    urlObject.setOriginalUrl(request.getUrl());
+    urlObject.setCreationDate(LocalDateTime.now());
 
-    Url persistedUrl = shortenRepository.save(persistUrl);
-
-    if (persistedUrl != null) {
-      return persistedUrl;
-    } else {
-      throw new ApplicationException("Error caused while persisting url");
-    }
-  }
-
-  private LocalDateTime generateExpirationDate(LocalDateTime creationDate) {
-    return creationDate.plusDays(2);
+    return jpaRepository.save(urlObject);
   }
 
   private String encodeUrl(String url) {
@@ -56,11 +51,13 @@ public class ShortenServiceImpl implements ShortenService {
 
   @Override
   public Url getUrl(String shortUrl) {
-    return shortenRepository.findByShortUrl(shortUrl);
-  }
-
-  @Override
-  public void deleteUrl(Url url) {
-    shortenRepository.delete(url);
+    if (redisRepository.checkIfExists(shortUrl)) {
+      log.debug("Fetching from redis");
+      return redisRepository.get(shortUrl);
+    } else {
+      log.debug("Not found in redis. Fetching from JPA");
+      Url jpaResponse = jpaRepository.findByShortUrl(shortUrl);
+      return redisRepository.save(jpaResponse);
+    }
   }
 }

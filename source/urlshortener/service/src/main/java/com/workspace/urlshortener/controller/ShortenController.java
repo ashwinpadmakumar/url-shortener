@@ -9,13 +9,11 @@
 package com.workspace.urlshortener.controller;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.workspace.urlshortener.dto.ShortenRequest;
 import com.workspace.urlshortener.dto.ShortenResponse;
-import com.workspace.urlshortener.exception.ApplicationException;
 import com.workspace.urlshortener.model.Url;
 import com.workspace.urlshortener.service.ShortenService;
 import lombok.extern.slf4j.Slf4j;
@@ -52,11 +50,6 @@ public class ShortenController {
   @GetMapping("/{shortUrl}")
   public void redirect(@PathVariable String shortUrl, HttpServletResponse response) throws IOException {
     Url url = shortenService.getUrl(shortUrl);
-    if (url.getExpirationDate().isBefore(LocalDateTime.now())) {
-      shortenService.deleteUrl(url);
-      throw new ApplicationException("URL Expired. Please generate a new one");
-    } else {
-      response.sendRedirect(url.getOriginalUrl());
-    }
+    response.sendRedirect(url.getOriginalUrl());
   }
 }

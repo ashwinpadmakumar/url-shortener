@@ -1,5 +1,5 @@
 /**
- * Description: Repository interface.
+ * Description: JPA Repository Implementation.
  *
  * @author: Ashwin Padmakumar
  * @since: 2021-06-15
@@ -15,5 +15,6 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface JpaRepositoryImpl extends ShortenRepository, JpaRepository<Url, Long> {
+public interface JpaRepositoryImpl extends JpaRepository<Url, Long> {
+  Url findByShortUrl(String shortUrl);
 }

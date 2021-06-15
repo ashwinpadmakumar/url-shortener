@@ -15,6 +15,4 @@ public interface ShortenService {
   Url generateAndPersistShortUrl(ShortenRequest request);
 
   Url getUrl(String shortUrl);
-
-  void deleteUrl(Url url);
 }
