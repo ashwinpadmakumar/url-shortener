@@ -1,5 +1,5 @@
 /**
- * Description: Service class.
+ * Description: Service interface.
  *
  * @author: Ashwin Padmakumar
  * @since: 2021-06-15
@@ -10,15 +10,11 @@ package com.workspace.urlshortener.service;
 
 import com.workspace.urlshortener.dto.ShortenRequest;
 import com.workspace.urlshortener.model.Url;
-import org.springframework.stereotype.Service;
 
-@Service
 public interface ShortenService {
-  Url generateShortLink(ShortenRequest request);
+  Url generateAndPersistShortUrl(ShortenRequest request);
 
-  Url persistShortLink(Url url);
+  Url getUrl(String shortUrl);
 
-  Url getShortLink(String url);
-
-  void deleteShortLink(Url url);
+  void deleteUrl(Url url);
 }

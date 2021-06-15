@@ -1,12 +1,7 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.1'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'checkstyle'
 }
-
-group = 'com.workspace'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
 
 configurations {
 	compileOnly {
@@ -14,22 +9,27 @@ configurations {
 	}
 }
 
-repositories {
-	mavenCentral()
+allprojects {
+	group = 'com.workspace'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = '11'
+
+	apply plugin: 'checkstyle'
+
+	checkstyle {
+		toolVersion '8.39'
+		configFile rootProject.file('config/checkstyle/checkstyle.xml')
+		ignoreFailures = false
+		maxWarnings = 0
+		maxErrors = 0
+	}
+
+	test {
+		useJUnitPlatform()
+	}
+
+	repositories {
+		mavenCentral()
+	}
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'com.google.guava:guava:11.0.2'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-	implementation 'com.microsoft.sqlserver:mssql-jdbc'
-	implementation 'mysql:mysql-connector-java'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-test {
-	useJUnitPlatform()
-}

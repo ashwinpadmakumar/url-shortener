@@ -15,30 +15,29 @@ import com.google.common.hash.Hashing;
 import com.workspace.urlshortener.dto.ShortenRequest;
 import com.workspace.urlshortener.exception.ApplicationException;
 import com.workspace.urlshortener.model.Url;
-import com.workspace.urlshortener.respository.ShortenRepository;
+import com.workspace.urlshortener.respository.ShortenRepositoryDup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 
 @Service
 public class ShortenServiceImpl implements ShortenService {
 
   @Autowired
-  private ShortenRepository shortenRepository;
+  private ShortenRepositoryDup shortenRepository;
 
   @Override
-  public Url generateShortLink(ShortenRequest request) {
+  public Url generateAndPersistShortUrl(ShortenRequest request) {
     Url persistUrl = new Url();
-    persistUrl.setShortLink(encodeUrl(request.getUrl()));
-    persistUrl.setOriginalLink(request.getUrl());
+    persistUrl.setShortUrl(encodeUrl(request.getUrl()));
+    persistUrl.setOriginalUrl(request.getUrl());
     persistUrl.setCreationDate(LocalDateTime.now());
     persistUrl.setExpirationDate(generateExpirationDate(persistUrl.getCreationDate()));
 
-    Url urlToReturn = persistShortLink(persistUrl);
+    Url persistedUrl = shortenRepository.save(persistUrl);
 
-    if (urlToReturn != null) {
-      return urlToReturn;
+    if (persistedUrl != null) {
+      return persistedUrl;
     } else {
       throw new ApplicationException("Error caused while persisting url");
     }
@@ -55,17 +54,12 @@ public class ShortenServiceImpl implements ShortenService {
   }
 
   @Override
-  public Url persistShortLink(Url url) {
-    return shortenRepository.save(url);
+  public Url getUrl(String shortUrl) {
+    return shortenRepository.findByShortUrl(shortUrl);
   }
 
   @Override
-  public Url getShortLink(String shortUrl) {
-    return shortenRepository.findByShortLink(shortUrl);
-  }
-
-  @Override
-  public void deleteShortLink(Url url) {
+  public void deleteUrl(Url url) {
     shortenRepository.delete(url);
   }
 }

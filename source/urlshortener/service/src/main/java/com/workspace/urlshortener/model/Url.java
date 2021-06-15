@@ -26,9 +26,9 @@ import lombok.NoArgsConstructor;
 public class Url {
 
   @Id
-  private String shortLink;
+  private String shortUrl;
   @Lob
-  private String originalLink;
+  private String originalUrl;
   private LocalDateTime creationDate;
   private LocalDateTime expirationDate;
 }

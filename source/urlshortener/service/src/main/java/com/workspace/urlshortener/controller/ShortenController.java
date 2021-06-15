@@ -36,24 +36,24 @@ public class ShortenController {
 
 
   @PostMapping("/generate")
-  public ResponseEntity<ShortenResponse> generateShortLink(@RequestBody ShortenRequest request) {
-    Url url = shortenService.generateShortLink(request);
+  public ResponseEntity<ShortenResponse> generateShortUrl(@RequestBody ShortenRequest request) {
+    Url url = shortenService.generateAndPersistShortUrl(request);
 
     ShortenResponse response = new ShortenResponse();
-    response.setShortLink(url.getShortLink());
-    response.setOriginalLink(url.getOriginalLink());
+    response.setShortUrl(url.getShortUrl());
+    response.setOriginalUrl(url.getOriginalUrl());
 
     return new ResponseEntity<>(response, HttpStatus.CREATED);
   }
 
-  @GetMapping("/{shortLink}")
-  public void redirect(@PathVariable String shortLink, HttpServletResponse response) throws IOException {
-    Url url = shortenService.getShortLink(shortLink);
+  @GetMapping("/{shortUrl}")
+  public void redirect(@PathVariable String shortUrl, HttpServletResponse response) throws IOException {
+    Url url = shortenService.getUrl(shortUrl);
     if (url.getExpirationDate().isBefore(LocalDateTime.now())) {
-      shortenService.deleteShortLink(url);
+      shortenService.deleteUrl(url);
       throw new ApplicationException("URL Expired. Please generate a new one");
     } else {
-      response.sendRedirect(url.getOriginalLink());
+      response.sendRedirect(url.getOriginalUrl());
     }
   }
 }

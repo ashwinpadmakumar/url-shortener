@@ -1,1 +1,4 @@
+
+include "service"
+
 rootProject.name = 'urlshortener'
