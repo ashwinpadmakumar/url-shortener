@@ -1,4 +1,16 @@
+/**
+ * Description: URL Shortener Controller.
+ *
+ * @author: Ashwin Padmakumar
+ * @since: 2021-06-15
+ * @version: 0.1
+ */
+
 package com.workspace.urlshortener.controller;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import javax.servlet.http.HttpServletResponse;
 
 import com.workspace.urlshortener.dto.ShortenRequest;
 import com.workspace.urlshortener.dto.ShortenResponse;
@@ -8,22 +20,15 @@ import com.workspace.urlshortener.service.ShortenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.time.LocalDateTime;
-
-/**
- * Classification: Trimble Confidential.
- * Description: Custom Banner for Startup
- *
- * @author: Ashwin Padmakumar
- * @since: 2021-06-15
- * @version: 0.1
- */
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping(value = "/shorten-service")
 public class ShortenController {
 
   @Autowired

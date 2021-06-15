@@ -1,20 +1,22 @@
-package com.workspace.urlshortener.model;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
-
 /**
- * Classification: Trimble Confidential.
- * Description: Custom Banner for Startup
+ * Description: URL Model.
  *
  * @author: Ashwin Padmakumar
  * @since: 2021-06-15
  * @version: 0.1
  */
+
+package com.workspace.urlshortener.model;
+
+import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "urls")
