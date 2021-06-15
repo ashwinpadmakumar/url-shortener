@@ -1,0 +1,61 @@
+version: "3.8"
+networks:
+  personal-network:
+    external: true
+services:
+  personal-sql:
+    image: mysql
+    restart: always
+    command: --init-file /data/application/init.sql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - '3306:3306'
+    volumes:
+      - sql_volume:/var/lib/mysql
+      - ./setup/sql/init.sql:/data/application/init.sql
+    networks:
+      - personal-network
+    hostname: personal-sql
+    container_name: personal-sql
+  
+  personal-redis:
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+    networks:
+      - personal-network
+    hostname: personal-redis
+    container_name: personal-redis
+
+  urlshortener-service:
+    build:
+      context: .
+      dockerfile: source/urlshortener/Dockerfile
+      args:
+        userID: ${userID}
+        groupID: ${groupID}
+    volumes:
+      - ./:/app/
+      - ~/.gradle:/tmp/gradle_user_home
+    working_dir: /app/source/urlshortener/
+    environment:
+      - LIVE_RELOAD=false
+    command: [ "sh", "./run.sh" ]
+    user: ${userID}:${groupID}
+    networks:
+      - personal-network
+    depends_on:
+      - personal-sql
+      - personal-redis
+    ports:
+      - 5006:5006
+      - 8080:8080
+    hostname: urlshortener-service
+    container_name: urlshortener-service
+
+volumes:
+  sql_volume:
+  redis_data:
