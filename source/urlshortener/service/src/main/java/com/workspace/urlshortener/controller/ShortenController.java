@@ -17,6 +17,7 @@ import com.workspace.urlshortener.dto.ShortenResponse;
 import com.workspace.urlshortener.exception.ApplicationException;
 import com.workspace.urlshortener.model.Url;
 import com.workspace.urlshortener.service.ShortenService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/shorten-service")
+@Slf4j
 public class ShortenController {
 
   @Autowired
