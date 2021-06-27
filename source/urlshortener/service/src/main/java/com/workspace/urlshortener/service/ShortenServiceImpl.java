@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 
 import com.google.common.hash.Hashing;
 import com.workspace.urlshortener.dto.ShortenRequest;
-import com.workspace.urlshortener.exception.ApplicationException;
 import com.workspace.urlshortener.model.Url;
 import com.workspace.urlshortener.respository.JpaRepositoryImpl;
 import com.workspace.urlshortener.respository.RedisRepositoryImpl;

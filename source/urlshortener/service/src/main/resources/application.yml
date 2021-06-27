@@ -5,7 +5,7 @@ spring:
     active: local
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://personal-sql:3306/url_shortener_database
+    url: jdbc:mysql://sql-service:3306/url_shortener_database
     username: root
     password: password
     initialization-mode: always

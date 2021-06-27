@@ -3,21 +3,20 @@ networks:
   personal-network:
     external: true
 services:
-  personal-sql:
+  sql-service:
     image: mysql
     restart: always
-    command: --init-file /data/application/init.sql
     environment:
       - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=url_shortener_database
     ports:
       - '3306:3306'
     volumes:
-      - sql_volume:/var/lib/mysql
-      - ./setup/sql/init.sql:/data/application/init.sql
+      - sql_data:/var/lib/mysql
     networks:
       - personal-network
-    hostname: personal-sql
-    container_name: personal-sql
+    hostname: sql-service
+    container_name: sql-service
   
   personal-redis:
     image: redis
@@ -48,7 +47,7 @@ services:
     networks:
       - personal-network
     depends_on:
-      - personal-sql
+      - sql-service
       - personal-redis
     ports:
       - 5006:5006
@@ -57,5 +56,5 @@ services:
     container_name: urlshortener-service
 
 volumes:
-  sql_volume:
+  sql_data:
   redis_data:
