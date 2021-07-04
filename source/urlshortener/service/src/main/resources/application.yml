@@ -12,9 +12,9 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
   redis:
-    host: redis://personal-redis:6379
+    host: redis://redis-service:6379

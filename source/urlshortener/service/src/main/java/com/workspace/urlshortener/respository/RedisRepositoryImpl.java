@@ -64,7 +64,7 @@ public class RedisRepositoryImpl {
   }
 
   private Url bindFromMap(Map<String, Object> urlMap) {
-    Url url = new Url();
+    var url = new Url();
     url.setShortUrl(urlMap.get("shortUrl").toString());
     url.setOriginalUrl(urlMap.get("originalUrl").toString());
     url.setCreationDate(LocalDateTime.parse(urlMap.get("creationDate").toString()));

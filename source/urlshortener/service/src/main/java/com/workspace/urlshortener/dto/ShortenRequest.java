@@ -17,7 +17,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShortenRequest {
-
   private String url;
-
 }

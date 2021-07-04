@@ -33,7 +33,7 @@ public class ShortenServiceImpl implements ShortenService {
 
   @Override
   public Url generateAndPersistShortUrl(ShortenRequest request) {
-    Url urlObject = new Url();
+    var urlObject = new Url();
     urlObject.setShortUrl(encodeUrl(request.getUrl()));
     urlObject.setOriginalUrl(request.getUrl());
     urlObject.setCreationDate(LocalDateTime.now());
@@ -55,7 +55,7 @@ public class ShortenServiceImpl implements ShortenService {
       return redisRepository.get(shortUrl);
     } else {
       log.debug("Not found in redis. Fetching from JPA");
-      Url jpaResponse = jpaRepository.findByShortUrl(shortUrl);
+      var jpaResponse = jpaRepository.findByShortUrl(shortUrl);
       return redisRepository.save(jpaResponse);
     }
   }

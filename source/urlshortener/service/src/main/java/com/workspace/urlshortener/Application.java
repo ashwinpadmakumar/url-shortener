@@ -15,7 +15,7 @@ public class Application {
 
   @Bean
   public RedissonClient redisClient(@Value("${spring.redis.host}") String redisNodes) {
-    Config config = new Config();
+    var config = new Config();
     config.useSingleServer()
         .setAddress(redisNodes);
     config.setCodec(new StringCodec());

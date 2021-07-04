@@ -38,9 +38,9 @@ public class ShortenController {
 
   @PostMapping("/generate")
   public ResponseEntity<ShortenResponse> generateShortUrl(@Valid @RequestBody ShortenRequest request) {
-    Url url = shortenService.generateAndPersistShortUrl(request);
+    var url = shortenService.generateAndPersistShortUrl(request);
 
-    ShortenResponse response = new ShortenResponse();
+    var response = new ShortenResponse();
     response.setShortUrl(url.getShortUrl());
     response.setOriginalUrl(url.getOriginalUrl());
 
@@ -49,7 +49,7 @@ public class ShortenController {
 
   @GetMapping("/{shortUrl}")
   public void redirect(@PathVariable String shortUrl, HttpServletResponse response) throws IOException {
-    Url url = shortenService.getUrl(shortUrl);
+    var url = shortenService.getUrl(shortUrl);
     response.sendRedirect(url.getOriginalUrl());
   }
 }
