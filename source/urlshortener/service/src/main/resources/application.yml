@@ -2,19 +2,4 @@ spring:
   application:
     name: urlshortener
   profiles:
-    active: local
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://sql-service:3306/url_shortener_database
-    username: root
-    password: password
-    initialization-mode: always
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: create-drop
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
-  redis:
-    host: redis://redis-service:6379
+    active: docker

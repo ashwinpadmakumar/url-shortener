@@ -8,8 +8,22 @@
 
 package com.workspace.urlshortener.exception;
 
+import org.springframework.http.HttpStatus;
+
 public class ApplicationException extends RuntimeException {
-  public ApplicationException(String exception) {
-    super(exception);
+  private final HttpStatus statusCode;
+  private final String statusMessage;
+
+  public ApplicationException(HttpStatus statusCode, String statusMessage) {
+    this.statusCode = statusCode;
+    this.statusMessage = statusMessage;
+  }
+
+  public HttpStatus getStatusCode() {
+    return statusCode;
+  }
+
+  public String getStatusMessage() {
+    return statusMessage;
   }
 }

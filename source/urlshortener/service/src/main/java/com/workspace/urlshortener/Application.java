@@ -1,3 +1,11 @@
+/**
+ * Description: Custom Banner for Startup.
+ *
+ * @author: Ashwin Padmakumar
+ * @since: 18/07/21
+ * @version: 0.1
+ */
+
 package com.workspace.urlshortener;
 
 import org.redisson.Redisson;
@@ -11,7 +19,6 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class Application {
-
 
   @Bean
   public RedissonClient redisClient(@Value("${spring.redis.host}") String redisNodes) {

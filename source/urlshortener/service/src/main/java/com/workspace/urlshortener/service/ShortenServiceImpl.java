@@ -1,8 +1,8 @@
 /**
- * Description: Shorten Service Implementation.
+ * Description: Custom Banner for Startup.
  *
  * @author: Ashwin Padmakumar
- * @since: 2021-06-15
+ * @since: 12/07/21
  * @version: 0.1
  */
 
@@ -12,27 +12,26 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
 import com.google.common.hash.Hashing;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
 import com.workspace.urlshortener.dto.ShortenRequest;
 import com.workspace.urlshortener.model.Url;
 import com.workspace.urlshortener.respository.JpaRepositoryImpl;
 import com.workspace.urlshortener.respository.RedisRepositoryImpl;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 
 @Service
 @Slf4j
+@AllArgsConstructor
 public class ShortenServiceImpl implements ShortenService {
 
-  @Autowired
-  private JpaRepositoryImpl jpaRepository;
-
-  @Autowired
-  private RedisRepositoryImpl redisRepository;
+  private final JpaRepositoryImpl jpaRepository;
+  private final RedisRepositoryImpl redisRepository;
 
   @Override
-  public Url generateAndPersistShortUrl(ShortenRequest request) {
+  public Url generateShortUrl(ShortenRequest request) {
     var urlObject = new Url();
     urlObject.setShortUrl(encodeUrl(request.getUrl()));
     urlObject.setOriginalUrl(request.getUrl());
@@ -49,7 +48,7 @@ public class ShortenServiceImpl implements ShortenService {
   }
 
   @Override
-  public Url getUrl(String shortUrl) {
+  public Url getShortUrl(String shortUrl) {
     if (redisRepository.checkIfExists(shortUrl)) {
       log.debug("Fetching from redis");
       return redisRepository.get(shortUrl);

@@ -13,13 +13,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import com.workspace.urlshortener.exception.ApplicationException;
-import com.workspace.urlshortener.model.Url;
 import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
+import com.workspace.urlshortener.exception.ApplicationException;
+import com.workspace.urlshortener.model.Url;
 
 @Repository
 public class RedisRepositoryImpl {
@@ -39,14 +40,14 @@ public class RedisRepositoryImpl {
     if (checkIfExists(url.getShortUrl())) {
       return url;
     } else {
-      throw new ApplicationException("Error while saving in redis");
+      throw new ApplicationException(HttpStatus.INTERNAL_SERVER_ERROR, "Error while saving in redis");
     }
   }
 
 
   public void delete(Url url) {
     if (!redissonClient.getMap(url.getShortUrl()).delete()) {
-      throw new ApplicationException("Error while deleting from redis");
+      throw new ApplicationException(HttpStatus.INTERNAL_SERVER_ERROR, "Error while deleting from redis");
     }
   }
 

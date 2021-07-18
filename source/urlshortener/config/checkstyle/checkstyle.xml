@@ -26,6 +26,8 @@
     </module>
 
     <module name="Header">
+        <property name="header"
+                  value="/**"/>
         <property name="fileExtensions"
                   value="java"/>
     </module>
@@ -250,6 +252,8 @@
             <property name="customImportOrderRules"
                       value="STATIC###STANDARD_JAVA_PACKAGE###SPECIAL_IMPORTS###THIRD_PARTY_PACKAGE"/>
             <property name="standardPackageRegExp" value="^(java|javax)\."/>
+            <property name="specialImportsRegExp" value="^(?!(com\.workspace\.)|(java[x]?)).+\."/>
+            <property name="thirdPartyPackageRegExp" value="^com\.workspace\."/>
             <property name="separateLineBetweenGroups" value="true"/>
             <property name="sortImportsInGroupAlphabetically" value="true"/>
         </module>

@@ -12,10 +12,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import com.workspace.urlshortener.dto.ShortenRequest;
-import com.workspace.urlshortener.dto.ShortenResponse;
-import com.workspace.urlshortener.model.Url;
-import com.workspace.urlshortener.service.ShortenService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +22,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.workspace.urlshortener.dto.ShortenRequest;
+import com.workspace.urlshortener.dto.ShortenResponse;
+import com.workspace.urlshortener.service.ShortenService;
 
 @RestController
 @RequestMapping(value = "/shorten-service")
@@ -38,7 +38,7 @@ public class ShortenController {
 
   @PostMapping("/generate")
   public ResponseEntity<ShortenResponse> generateShortUrl(@Valid @RequestBody ShortenRequest request) {
-    var url = shortenService.generateAndPersistShortUrl(request);
+    var url = shortenService.generateShortUrl(request);
 
     var response = new ShortenResponse();
     response.setShortUrl(url.getShortUrl());
@@ -49,7 +49,7 @@ public class ShortenController {
 
   @GetMapping("/{shortUrl}")
   public void redirect(@PathVariable String shortUrl, HttpServletResponse response) throws IOException {
-    var url = shortenService.getUrl(shortUrl);
+    var url = shortenService.getShortUrl(shortUrl);
     response.sendRedirect(url.getOriginalUrl());
   }
 }

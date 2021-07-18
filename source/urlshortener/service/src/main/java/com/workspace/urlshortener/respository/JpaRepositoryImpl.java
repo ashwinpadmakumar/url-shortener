@@ -9,10 +9,10 @@
 
 package com.workspace.urlshortener.respository;
 
-import com.workspace.urlshortener.model.Url;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.workspace.urlshortener.model.Url;
 
 @Repository
 public interface JpaRepositoryImpl extends JpaRepository<Url, Long> {

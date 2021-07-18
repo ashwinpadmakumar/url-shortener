@@ -1,0 +1,34 @@
+version: "3.8"
+networks:
+  personal-network:
+    external: true
+services:
+  sql-service:
+    image: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=url_shortener_database
+    ports:
+      - '3306:3306'
+    volumes:
+      - sql_data:/var/lib/mysql
+    networks:
+      - personal-network
+    hostname: sql-service
+    container_name: sql-service
+  
+  redis-service:
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+    networks:
+      - personal-network
+    hostname: redis-service
+    container_name: redis-service
+
+volumes:
+  sql_data:
+  redis_data:
