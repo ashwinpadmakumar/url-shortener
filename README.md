@@ -1,5 +1,5 @@
 
-# URL Shortener
+# Overview
 
 URL Shortener is a simple application that is used to shorten long URLs. A URL shortener is useful in the cases where you have long URLs that have sensitive pieces of information and you want to hide that from the service you are sharing the URLs with. 
 
