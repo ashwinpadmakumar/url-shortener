@@ -3,12 +3,6 @@ plugins {
 	id 'checkstyle'
 }
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
-
 allprojects {
 	group = 'com.workspace'
 	version = '0.0.1-SNAPSHOT'

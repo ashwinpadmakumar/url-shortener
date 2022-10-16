@@ -1,7 +1,5 @@
 #!/bin/bash
 
-export CONTAINER_ID="${CONTAINER_ID:-local}"
-
 ./gradlew --status
 
 JVM_ARGS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006"
@@ -12,7 +10,6 @@ JVM_ARGS="${JVM_ARGS} -XX:+IdleTuningGcOnIdle"
 JVM_ARGS="${JVM_ARGS} -Xtune:virtualized"
 JVM_ARGS="${JVM_ARGS} -Xscmx128m"
 JVM_ARGS="${JVM_ARGS} -Xscmaxaot100m"
-JVM_ARGS="${JVM_ARGS} -PCONTAINER_ID=${CONTAINER_ID}"
 
 SPRING_ARG="--spring.profiles.active=docker"
 

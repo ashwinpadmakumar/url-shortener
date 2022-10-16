@@ -6,7 +6,7 @@ services:
   urlshortener-service:
     build:
       context: ./source/urlshortener
-      dockerfile: Dockerfile
+      dockerfile: dev.Dockerfile
       args:
         userID: ${userID}
         groupID: ${groupID}
